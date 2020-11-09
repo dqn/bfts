@@ -17,6 +17,7 @@ type DecrementHead<A> = A extends [infer Head, ...infer Rest]
   ? [PrevNumber<Head>, ...Rest]
   : never;
 
+// [Memory, Output]
 export type Evaluate<Operators, M, O = []> = Operators extends [
   infer N,
   ...infer Rest
@@ -36,11 +37,8 @@ export type Evaluate<Operators, M, O = []> = Operators extends [
     : N extends Operator[]
     ? 0 extends Head<M>
       ? Evaluate<Rest, M, O>
-      : Evaluate<N, M, O> extends {
-          memory: infer MResult;
-          output: infer OResult;
-        }
+      : Evaluate<N, M, O> extends [infer MResult, infer OResult]
       ? Evaluate<Operators, MResult, OResult>
       : never
     : never
-  : { memory: M; output: O };
+  : [M, O];
