@@ -15,3 +15,6 @@ type Result2 = Interpret<
   "+++++++++[>++++++++>+++++++++++>+++>+<<<<-]>.>++.+++++++..+++.>+++++.<<+++++++++++++++.>.+++.------.--------.>+.>+."
 >;
 type Test2 = Expect<Equals<Result2, "Hello World!\n">>;
+
+type Result3 = Interpret<",>,<+.>+.", "AB">;
+type Test3 = Expect<Equals<Result3, "BC">>;
