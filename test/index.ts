@@ -8,4 +8,10 @@ type Equals<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
 
 type Expect<T extends true> = T;
 
-type Result = Expect<Equals<Interpret<"+++++[>+++<-]>+++.">, "\u0012">>;
+type Result1 = Interpret<"++++[>+++++<-]>--.">;
+type Test1 = Expect<Equals<Result1, "\u0012">>;
+
+type Result2 = Interpret<
+  "+++++++++[>++++++++>+++++++++++>+++>+<<<<-]>.>++.+++++++..+++.>+++++.<<+++++++++++++++.>.+++.------.--------.>+.>+."
+>;
+type Test2 = Expect<Equals<Result2, "Hello World!\n">>;
