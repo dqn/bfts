@@ -14,14 +14,6 @@ type Write<M, N> = {
   [K in keyof M]: K extends "0" ? N : M[K];
 };
 
-type IncrementHead<A> = A extends [infer Head, ...infer Rest]
-  ? [NextNumber<Head>, ...Rest]
-  : never;
-
-type DecrementHead<A> = A extends [infer Head, ...infer Rest]
-  ? [PrevNumber<Head>, ...Rest]
-  : never;
-
 // [Memory, Output]
 export type Evaluate<Operators, M, I, O> = Operators extends [
   infer N,
