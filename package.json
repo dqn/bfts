@@ -1,15 +1,16 @@
 {
   "name": "bfts",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
   "license": "MIT",
+  "main": "dist/index.js",
   "scripts": {
-    "unlimit": "sed -i '' 's/instantiationDepth === 50 || instantiationCount >= 5000000/false/' node_modules/typescript/lib/{tsc,tsserver}.js"
+    "build": "rm -rf dist/ && tsc",
+    "test": "tsc ./test/index.ts --noEmit",
+    "unlimit": "sed -i '' 's/instantiationDepth === 50 || instantiationCount >= 5000000/false/' node_modules/typescript/lib/{tsc,tsserver}.js",
+    "prepare": "yarn build"
   },
   "devDependencies": {
-    "@types/node": "^14.14.6",
     "prettier": "^2.1.2",
-    "ts-node": "^9.0.0",
     "typescript": "^4.1.0-beta"
   }
 }
