@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist/ && tsc",
     "test": "tsc ./test/index.ts --noEmit",
-    "unlimit": "sed -i '' 's/instantiationDepth === 50 || instantiationCount >= 5000000/false/' node_modules/typescript/lib/{tsc,tsserver}.js",
+    "unlimit": "sed -i -e 's/instantiationDepth === 50 || instantiationCount >= 5000000/false/' node_modules/typescript/lib/{tsc,tsserver}.js",
     "prepare": "yarn build"
   },
   "devDependencies": {
