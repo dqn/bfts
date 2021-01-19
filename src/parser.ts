@@ -16,7 +16,7 @@ type ParseCore<S, Operators extends any[] = []> = S extends `>${infer Rest}`
   ? {
       __rec: Recurse<ParseCore<Rest>> extends [
         infer Operators2,
-        `]${infer Rest2}`
+        `]${infer Rest2}`,
       ]
         ? { __rec: ParseCore<Rest2, [...Operators, Operators2]> }
         : never;
@@ -25,7 +25,7 @@ type ParseCore<S, Operators extends any[] = []> = S extends `>${infer Rest}`
 
 export type Parse<Source> = Recurse<ParseCore<Source>> extends [
   infer Operators,
-  infer Rest
+  infer Rest,
 ]
   ? Rest extends ""
     ? Operators

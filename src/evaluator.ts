@@ -56,7 +56,7 @@ type EvaluateCore<
       : {
           __rec: Recurse<EvaluateCore<N, Input, Memory, Result>> extends [
             infer Memory2,
-            infer Result2
+            infer Result2,
           ]
             ? { __rec: EvaluateCore<Operators, Input, Memory2, Result2> }
             : never;

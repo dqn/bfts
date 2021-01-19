@@ -254,7 +254,7 @@ export type Numbers = [
   0xfc,
   0xfd,
   0xfe,
-  0xff
+  0xff,
 ];
 
 export type Chars = [
@@ -513,7 +513,7 @@ export type Chars = [
   "\u00fc",
   "\u00fd",
   "\u00fe",
-  "\u00ff"
+  "\u00ff",
 ];
 
 export type CharMap = {
