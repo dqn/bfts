@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x, 15.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +19,5 @@ jobs:
       - name: Test
         run: |
           yarn --frozen-lockfile
-          sed -i -e 's/instantiationDepth === 50 || instantiationCount >= 5000000/false/' node_modules/typescript/lib/tsc.js
-          sed -i -e 's/instantiationDepth === 50 || instantiationCount >= 5000000/false/' node_modules/typescript/lib/tsserver.js
           yarn build
           yarn test
