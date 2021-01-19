@@ -16,8 +16,10 @@ export type NextNumber<I> = I extends number ? LRotate<Numbers>[I] : never;
 
 export type PrevNumber<I> = I extends number ? RRotate<Numbers>[I] : never;
 
-export type CharAt<C> = C extends number ? Chars[C] : never
+export type CharAt<C> = C extends number ? Chars[C] : never;
 
-export type Stringify<O> = O extends [infer Head, ...infer Rest] ? `${CharAt<Head>}${Stringify<Rest>}` : "";
+export type Stringify<O> = O extends [infer Head, ...infer Rest]
+  ? `${CharAt<Head>}${Stringify<Rest>}`
+  : "";
 
 export type AtoI<A> = A extends keyof CharMap ? CharMap[A] : never;

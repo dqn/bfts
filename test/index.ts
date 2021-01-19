@@ -11,9 +11,7 @@ type Expect<T extends true> = T;
 type Result1 = Interpret<"++++[>+++++<-]>--.">;
 type Test1 = Expect<Equals<Result1, "\u0012">>;
 
-type Result2 = Interpret<
-  "+++++++++[>++++++++>+++++++++++>+++>+<<<<-]>.>++.+++++++..+++.>+++++.<<+++++++++++++++.>.+++.------.--------.>+.>+."
->;
+type Result2 = Interpret<"+++++++++[>++++++++>+++++++++++>+++>+<<<<-]>.>++.+++++++..+++.>+++++.<<+++++++++++++++.>.+++.------.--------.>+.>+.">;
 type Test2 = Expect<Equals<Result2, "Hello World!\n">>;
 
 type Result3 = Interpret<",>,<+.>+.", "AB">;
