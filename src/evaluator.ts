@@ -1,3 +1,4 @@
+import type { Recurse } from "./recurse";
 import type {
   NextNumber,
   PrevNumber,
@@ -14,30 +15,52 @@ type Write<M, N> = {
   [K in keyof M]: K extends "0" ? N : M[K];
 };
 
-// [Memory, Output]
-export type Evaluate<Operators, M, I, O> = Operators extends [
+type EvaluateCore<Operators, Memory, Input, Result = []> = Operators extends [
   infer N,
   ...infer Rest
 ]
   ? N extends ">"
-    ? Evaluate<Rest, LRotate<M>, I, O>
+    ? { __rec: EvaluateCore<Rest, LRotate<Memory>, Input, Result> }
     : N extends "<"
-    ? Evaluate<Rest, RRotate<M>, I, O>
+    ? { __rec: EvaluateCore<Rest, RRotate<Memory>, Input, Result> }
     : N extends "+"
-    ? Evaluate<Rest, Write<M, NextNumber<Head<M>>>, I, O>
+    ? {
+        __rec: EvaluateCore<
+          Rest,
+          Write<Memory, NextNumber<Head<Memory>>>,
+          Input,
+          Result
+        >;
+      }
     : N extends "-"
-    ? Evaluate<Rest, Write<M, PrevNumber<Head<M>>>, I, O>
+    ? {
+        __rec: EvaluateCore<
+          Rest,
+          Write<Memory, PrevNumber<Head<Memory>>>,
+          Input,
+          Result
+        >;
+      }
     : N extends ","
-    ? I extends `${infer S}${infer R}`
-      ? Evaluate<Rest, Write<M, AtoI<S>>, R, O>
+    ? Input extends `${infer S}${infer R}`
+      ? { __rec: EvaluateCore<Rest, Write<Memory, AtoI<S>>, R, Result> }
       : never
     : N extends "."
-    ? Evaluate<Rest, M, I, Append<O, Head<M>>>
+    ? { __rec: EvaluateCore<Rest, Memory, Input, Append<Result, Head<Memory>>> }
     : N extends Operator[]
-    ? 0 extends Head<M>
-      ? Evaluate<Rest, M, I, O>
-      : Evaluate<N, M, I, O> extends [infer MResult, infer OResult]
-      ? Evaluate<Operators, MResult, I, OResult>
-      : never
+    ? 0 extends Head<Memory>
+      ? { __rec: EvaluateCore<Rest, Memory, Input, Result> }
+      : {
+          __rec: Recurse<EvaluateCore<N, Memory, Input, Result>> extends [
+            infer MResult,
+            infer OResult
+          ]
+            ? { __rec: EvaluateCore<Operators, MResult, Input, OResult> }
+            : never;
+        }
     : never
-  : [M, O];
+  : [Memory, Result];
+
+export type Evaluate<Operators, Memory, Input> = Recurse<
+  EvaluateCore<Operators, Memory, Input>
+>[1];

@@ -4,6 +4,6 @@ import type { Evaluate } from "./evaluator";
 
 type Memory = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-type Execute<Source, Input> = Evaluate<Parse<Source>, Memory, Input, []>;
+type Execute<Source, Input> = Evaluate<Parse<Source>, Memory, Input>;
 
-export type Interpret<S, Input = ""> = Stringify<Execute<S, Input>[1]>;
+export type Interpret<S, Input = ""> = Stringify<Execute<S, Input>>;
